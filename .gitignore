@@ -1,0 +1,28 @@
+# =============================================================================
+# Calculator — Multi-Mode Web Calculator
+# .gitignore
+# Developed by 7Sindhu Team
+# =============================================================================
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+*~
+
+# Editors
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+/tmp/
+
+# Node (if any tooling added)
+node_modules/
+npm-debug.log*
+package-lock.json

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="calculator">
+      <div class="mode-bar">
+        <div class="sidebar-title">Calculator</div>
+        <button class="mode-btn active" data-mode="simple"><span class="icon">🔢</span>Simple</button>
+        <button class="mode-btn" data-mode="scientific"><span class="icon">🔬</span>Scientific</button>
+        <button class="mode-btn" data-mode="programmatic"><span class="icon">💻</span>Programmatic</button>
+        <button class="mode-btn" data-mode="financial"><span class="icon">💰</span>Financial</button>
+        <button class="mode-btn" data-mode="unit"><span class="icon">📏</span>Unit</button>
+        <button class="mode-btn" data-mode="currency"><span class="icon">💱</span>Currency</button>
+        <button class="mode-btn" data-mode="matrix"><span class="icon">🔲</span>Matrix</button>
+        <button class="mode-btn" data-mode="stats"><span class="icon">📊</span>Statistics</button>
+        <button class="mode-btn" data-mode="datetime"><span class="icon">📅</span>Date & Time</button>
+        <button class="mode-btn" data-mode="health"><span class="icon">❤️</span>Health</button>
+        <button class="mode-btn" data-mode="color"><span class="icon">🎨</span>Color</button>
+      </div>
+      <div class="calc-main">
+
+      <!-- DISPLAY -->
+      <div class="display" id="display">
+        <div class="display-expr" id="expr"></div>
+        <div class="display-result" id="result">0</div>
+      </div>
+
+      <!-- SIMPLE MODE -->
+      <div class="panel active" id="panel-simple">
+        <div class="grid grid-4">
+          <button class="btn span-2 fn" onclick="clearAll()">AC</button>
+          <button class="btn fn" onclick="toggleSign()">+/−</button>
+          <button class="btn fn" onclick="inputOp('%')">%</button>
+          <button class="btn num" onclick="inputDigit('7')">7</button>
+          <button class="btn num" onclick="inputDigit('8')">8</button>
+          <button class="btn num" onclick="inputDigit('9')">9</button>
+          <button class="btn op" onclick="inputOp('/')">÷</button>
+          <button class="btn num" onclick="inputDigit('4')">4</button>
+          <button class="btn num" onclick="inputDigit('5')">5</button>
+          <button class="btn num" onclick="inputDigit('6')">6</button>
+          <button class="btn op" onclick="inputOp('*')">×</button>
+          <button class="btn num" onclick="inputDigit('1')">1</button>
+          <button class="btn num" onclick="inputDigit('2')">2</button>
+          <button class="btn num" onclick="inputDigit('3')">3</button>
+          <button class="btn op" onclick="inputOp('-')">−</button>
+          <button class="btn num span-2" onclick="inputDigit('0')">0</button>
+          <button class="btn num" onclick="inputDot()">.</button>
+          <button class="btn op" onclick="inputOp('+')">+</button>
+          <button class="btn eq span-4" onclick="calculate()">=</button>
+        </div>
+      </div>
+
+      <!-- SCIENTIFIC MODE -->
+      <div class="panel" id="panel-scientific">
+        <div class="grid grid-5">
+          <button class="btn sci" onclick="sciFunc('sin')">sin</button>
+          <button class="btn sci" onclick="sciFunc('cos')">cos</button>
+          <button class="btn sci" onclick="sciFunc('tan')">tan</button>
+          <button class="btn sci" onclick="sciFunc('log')">log</button>
+          <button class="btn sci" onclick="sciFunc('ln')">ln</button>
+          <button class="btn sci" onclick="sciFunc('sqrt')">√</button>
+          <button class="btn sci" onclick="sciFunc('sq')">x²</button>
+          <button class="btn sci" onclick="sciFunc('cube')">x³</button>
+          <button class="btn sci" onclick="inputOp('^')">xʸ</button>
+          <button class="btn sci" onclick="sciFunc('inv')">1/x</button>
+          <button class="btn sci" onclick="sciFunc('pi')">π</button>
+          <button class="btn sci" onclick="sciFunc('e')">e</button>
+          <button class="btn sci" onclick="sciFunc('fact')">n!</button>
+          <button class="btn sci" onclick="inputChar('(')"> ( </button>
+          <button class="btn sci" onclick="inputChar(')')"> ) </button>
+          <button class="btn fn span-2" onclick="clearAll()">AC</button>
+          <button class="btn fn" onclick="backspace()">⌫</button>
+          <button class="btn op" onclick="inputOp('%')">%</button>
+          <button class="btn op" onclick="inputOp('/')">÷</button>
+          <button class="btn num" onclick="inputDigit('7')">7</button>
+          <button class="btn num" onclick="inputDigit('8')">8</button>
+          <button class="btn num" onclick="inputDigit('9')">9</button>
+          <button class="btn op" onclick="inputOp('*')">×</button>
+          <button class="btn num" onclick="inputDigit('4')">4</button>
+          <button class="btn num" onclick="inputDigit('5')">5</button>
+          <button class="btn num" onclick="inputDigit('6')">6</button>
+          <button class="btn op" onclick="inputOp('-')">−</button>
+          <button class="btn num" onclick="inputDigit('1')">1</button>
+          <button class="btn num" onclick="inputDigit('2')">2</button>
+          <button class="btn num" onclick="inputDigit('3')">3</button>
+          <button class="btn op" onclick="inputOp('+')">+</button>
+          <button class="btn num span-2" onclick="inputDigit('0')">0</button>
+          <button class="btn num" onclick="inputDot()">.</button>
+          <button class="btn eq span-2" onclick="calculate()">=</button>
+        </div>
+      </div>
+
+      <!-- PROGRAMMATIC MODE -->
+      <div class="panel" id="panel-programmatic">
+        <div class="prog-base-bar">
+          <button class="base-btn active" data-base="10">DEC</button>
+          <button class="base-btn" data-base="16">HEX</button>
+          <button class="base-btn" data-base="8">OCT</button>
+          <button class="base-btn" data-base="2">BIN</button>
+        </div>
+        <div class="prog-conversions" id="prog-conv">
+          <span>HEX: <b id="phex">0</b></span>
+          <span>DEC: <b id="pdec">0</b></span>
+          <span>OCT: <b id="poct">0</b></span>
+          <span>BIN: <b id="pbin">0</b></span>
+        </div>
+        <div class="grid grid-4">
+          <button class="btn hex-btn" onclick="inputHex('A')">A</button>
+          <button class="btn hex-btn" onclick="inputHex('B')">B</button>
+          <button class="btn hex-btn" onclick="inputHex('C')">C</button>
+          <button class="btn fn" onclick="clearAll()">AC</button>
+          <button class="btn hex-btn" onclick="inputHex('D')">D</button>
+          <button class="btn hex-btn" onclick="inputHex('E')">E</button>
+          <button class="btn hex-btn" onclick="inputHex('F')">F</button>
+          <button class="btn fn" onclick="backspace()">⌫</button>
+          <button class="btn sci" onclick="bitOp('AND')">AND</button>
+          <button class="btn sci" onclick="bitOp('OR')">OR</button>
+          <button class="btn sci" onclick="bitOp('XOR')">XOR</button>
+          <button class="btn sci" onclick="bitOp('NOT')">NOT</button>
+          <button class="btn num" onclick="inputDigit('7')">7</button>
+          <button class="btn num" onclick="inputDigit('8')">8</button>
+          <button class="btn num" onclick="inputDigit('9')">9</button>
+          <button class="btn op" onclick="inputOp('/')">÷</button>
+          <button class="btn num" onclick="inputDigit('4')">4</button>
+          <button class="btn num" onclick="inputDigit('5')">5</button>
+          <button class="btn num" onclick="inputDigit('6')">6</button>
+          <button class="btn op" onclick="inputOp('*')">×</button>
+          <button class="btn num" onclick="inputDigit('1')">1</button>
+          <button class="btn num" onclick="inputDigit('2')">2</button>
+          <button class="btn num" onclick="inputDigit('3')">3</button>
+          <button class="btn op" onclick="inputOp('-')">−</button>
+          <button class="btn num span-2" onclick="inputDigit('0')">0</button>
+          <button class="btn num" onclick="inputDot()">.</button>
+          <button class="btn op" onclick="inputOp('+')">+</button>
+          <button class="btn eq span-4" onclick="calculate()">=</button>
+        </div>
+      </div>
+
+      <!-- FINANCIAL MODE -->
+      <div class="panel" id="panel-financial">
+        <div class="fin-grid">
+          <div class="fin-group">
+            <h3>Loan / EMI</h3>
+            <label>Principal ($)<input type="number" id="fin-principal" placeholder="10000"/></label>
+            <label>Annual Rate (%)<input type="number" id="fin-rate" placeholder="8"/></label>
+            <label>Months<input type="number" id="fin-months" placeholder="12"/></label>
+            <button class="fin-btn" onclick="calcEMI()">Calculate EMI</button>
+            <div class="fin-result" id="fin-emi-result"></div>
+          </div>
+          <div class="fin-group">
+            <h3>Compound Interest</h3>
+            <label>Principal ($)<input type="number" id="ci-principal" placeholder="5000"/></label>
+            <label>Annual Rate (%)<input type="number" id="ci-rate" placeholder="6"/></label>
+            <label>Years<input type="number" id="ci-years" placeholder="5"/></label>
+            <label>Compounds/yr<input type="number" id="ci-n" placeholder="12"/></label>
+            <button class="fin-btn" onclick="calcCI()">Calculate CI</button>
+            <div class="fin-result" id="fin-ci-result"></div>
+          </div>
+          <div class="fin-group">
+            <h3>ROI</h3>
+            <label>Initial ($)<input type="number" id="roi-init" placeholder="1000"/></label>
+            <label>Final ($)<input type="number" id="roi-final" placeholder="1500"/></label>
+            <button class="fin-btn" onclick="calcROI()">Calculate ROI</button>
+            <div class="fin-result" id="fin-roi-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UNIT CONVERSION MODE -->
+      <div class="panel" id="panel-unit">
+        <div class="conv-panel">
+          <select id="unit-category" onchange="updateUnitOptions()">
+            <option value="length">Length</option>
+            <option value="weight">Weight</option>
+            <option value="temp">Temperature</option>
+            <option value="area">Area</option>
+            <option value="volume">Volume</option>
+            <option value="speed">Speed</option>
+            <option value="time">Time</option>
+          </select>
+          <div class="conv-row">
+            <input type="number" id="unit-input" placeholder="Value" oninput="convertUnit()"/>
+            <select id="unit-from" onchange="convertUnit()"></select>
+          </div>
+          <div class="conv-arrow">⇅</div>
+          <div class="conv-row">
+            <input type="number" id="unit-output" placeholder="Result" readonly/>
+            <select id="unit-to" onchange="convertUnit()"></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- CURRENCY CONVERSION MODE -->
+      <div class="panel" id="panel-currency">
+        <div class="conv-panel">
+          <div class="currency-header">
+            <div class="currency-status" id="currency-status">Fetching live rates...</div>
+            <button class="cur-refresh-btn" id="cur-refresh" onclick="fetchLiveRates()" title="Refresh rates">🔄</button>
+          </div>
+          <div class="conv-row">
+            <input type="number" id="cur-input" placeholder="Amount" oninput="convertCurrency()"/>
+            <select id="cur-from" onchange="convertCurrency()"></select>
+          </div>
+          <div class="conv-arrow" onclick="swapCurrency()" style="cursor:pointer" title="Swap">⇅</div>
+          <div class="conv-row">
+            <input type="number" id="cur-output" placeholder="Result" readonly/>
+            <select id="cur-to" onchange="convertCurrency()"></select>
+          </div>
+          <div class="cur-rate-hint" id="cur-rate-hint"></div>
+        </div>
+      </div>
+
+      <!-- MATRIX MODE -->
+      <div class="panel" id="panel-matrix">
+        <div class="fin-grid">
+          <div class="fin-group">
+            <h3>Matrix A (2×2)</h3>
+            <div class="matrix-grid">
+              <input type="number" id="ma00" placeholder="a"/><input type="number" id="ma01" placeholder="b"/>
+              <input type="number" id="ma10" placeholder="c"/><input type="number" id="ma11" placeholder="d"/>
+            </div>
+          </div>
+          <div class="fin-group">
+            <h3>Matrix B (2×2)</h3>
+            <div class="matrix-grid">
+              <input type="number" id="mb00" placeholder="e"/><input type="number" id="mb01" placeholder="f"/>
+              <input type="number" id="mb10" placeholder="g"/><input type="number" id="mb11" placeholder="h"/>
+            </div>
+          </div>
+          <div class="matrix-ops">
+            <button class="fin-btn" onclick="matOp('add')">A + B</button>
+            <button class="fin-btn" onclick="matOp('sub')">A − B</button>
+            <button class="fin-btn" onclick="matOp('mul')">A × B</button>
+            <button class="fin-btn" onclick="matOp('detA')">det(A)</button>
+            <button class="fin-btn" onclick="matOp('invA')">A⁻¹</button>
+            <button class="fin-btn" onclick="matOp('trA')">tr(A)</button>
+          </div>
+          <div class="fin-result matrix-result" id="mat-result"></div>
+        </div>
+      </div>
+
+      <!-- STATISTICS MODE -->
+      <div class="panel" id="panel-stats">
+        <div class="fin-grid">
+          <div class="fin-group">
+            <h3>Data Set</h3>
+            <label>Numbers (comma separated)
+              <input type="text" id="stats-input" placeholder="1, 2, 3, 4, 5"/>
+            </label>
+            <div class="stats-ops">
+              <button class="fin-btn" onclick="calcStats('mean')">Mean</button>
+              <button class="fin-btn" onclick="calcStats('median')">Median</button>
+              <button class="fin-btn" onclick="calcStats('mode')">Mode</button>
+              <button class="fin-btn" onclick="calcStats('std')">Std Dev</button>
+              <button class="fin-btn" onclick="calcStats('variance')">Variance</button>
+              <button class="fin-btn" onclick="calcStats('all')">All Stats</button>
+            </div>
+            <div class="fin-result" id="stats-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATE & TIME MODE -->
+      <div class="panel" id="panel-datetime">
+        <div class="fin-grid">
+          <div class="fin-group">
+            <h3>Date Difference</h3>
+            <label>From<input type="date" id="dt-from"/></label>
+            <label>To<input type="date" id="dt-to"/></label>
+            <button class="fin-btn" onclick="calcDateDiff()">Calculate</button>
+            <div class="fin-result" id="dt-diff-result"></div>
+          </div>
+          <div class="fin-group">
+            <h3>Add / Subtract Days</h3>
+            <label>Start Date<input type="date" id="dt-base"/></label>
+            <label>Days (negative to subtract)<input type="number" id="dt-days" placeholder="30"/></label>
+            <button class="fin-btn" onclick="calcDateAdd()">Calculate</button>
+            <div class="fin-result" id="dt-add-result"></div>
+          </div>
+          <div class="fin-group">
+            <h3>Time Zone Converter</h3>
+            <label>Your local time<input type="datetime-local" id="tz-input"/></label>
+            <label>Target timezone
+              <select id="tz-target" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;color:#fff;font-size:14px;outline:none;">
+                <option value="UTC">UTC</option>
+                <option value="America/New_York">New York (ET)</option>
+                <option value="America/Los_Angeles">Los Angeles (PT)</option>
+                <option value="Europe/London">London (GMT)</option>
+                <option value="Europe/Paris">Paris (CET)</option>
+                <option value="Asia/Tokyo">Tokyo (JST)</option>
+                <option value="Asia/Kolkata">India (IST)</option>
+                <option value="Asia/Shanghai">Shanghai (CST)</option>
+                <option value="Australia/Sydney">Sydney (AEST)</option>
+                <option value="America/Sao_Paulo">São Paulo (BRT)</option>
+              </select>
+            </label>
+            <button class="fin-btn" onclick="convertTZ()">Convert</button>
+            <div class="fin-result" id="tz-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEALTH MODE -->
+      <div class="panel" id="panel-health">
+        <div class="fin-grid">
+          <div class="fin-group">
+            <h3>BMI Calculator</h3>
+            <label>Weight (kg)<input type="number" id="bmi-weight" placeholder="70"/></label>
+            <label>Height (cm)<input type="number" id="bmi-height" placeholder="175"/></label>
+            <button class="fin-btn" onclick="calcBMI()">Calculate BMI</button>
+            <div class="fin-result" id="bmi-result"></div>
+          </div>
+          <div class="fin-group">
+            <h3>Calorie Needs (TDEE)</h3>
+            <label>Age<input type="number" id="tdee-age" placeholder="25"/></label>
+            <label>Weight (kg)<input type="number" id="tdee-weight" placeholder="70"/></label>
+            <label>Height (cm)<input type="number" id="tdee-height" placeholder="175"/></label>
+            <label>Gender
+              <select id="tdee-gender" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;color:#fff;font-size:14px;outline:none;">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </label>
+            <label>Activity
+              <select id="tdee-activity" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;color:#fff;font-size:14px;outline:none;">
+                <option value="1.2">Sedentary</option>
+                <option value="1.375">Light exercise</option>
+                <option value="1.55">Moderate exercise</option>
+                <option value="1.725">Heavy exercise</option>
+                <option value="1.9">Athlete</option>
+              </select>
+            </label>
+            <button class="fin-btn" onclick="calcTDEE()">Calculate TDEE</button>
+            <div class="fin-result" id="tdee-result"></div>
+          </div>
+          <div class="fin-group">
+            <h3>Body Fat % (Navy Method)</h3>
+            <label>Waist (cm)<input type="number" id="bf-waist" placeholder="85"/></label>
+            <label>Neck (cm)<input type="number" id="bf-neck" placeholder="38"/></label>
+            <label>Height (cm)<input type="number" id="bf-height" placeholder="175"/></label>
+            <label>Hip (cm, females only)<input type="number" id="bf-hip" placeholder=""/></label>
+            <label>Gender
+              <select id="bf-gender" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;color:#fff;font-size:14px;outline:none;">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </label>
+            <button class="fin-btn" onclick="calcBodyFat()">Calculate</button>
+            <div class="fin-result" id="bf-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLOR MODE -->
+      <div class="panel" id="panel-color">
+        <div class="fin-grid">
+          <div class="fin-group">
+            <h3>Color Picker & Converter</h3>
+            <div class="color-preview" id="color-preview"></div>
+            <label>Pick Color<input type="color" id="color-picker" value="#7c3aed" oninput="onColorPick()"/></label>
+            <label>HEX<input type="text" id="color-hex" placeholder="#7c3aed" oninput="fromHex()"/></label>
+            <div class="color-row">
+              <label>R<input type="number" id="color-r" min="0" max="255" oninput="fromRGB()"/></label>
+              <label>G<input type="number" id="color-g" min="0" max="255" oninput="fromRGB()"/></label>
+              <label>B<input type="number" id="color-b" min="0" max="255" oninput="fromRGB()"/></label>
+            </div>
+            <div class="color-row">
+              <label>H<input type="number" id="color-h" min="0" max="360" oninput="fromHSL()"/></label>
+              <label>S%<input type="number" id="color-s" min="0" max="100" oninput="fromHSL()"/></label>
+              <label>L%<input type="number" id="color-l" min="0" max="100" oninput="fromHSL()"/></label>
+            </div>
+            <div class="fin-result" id="color-css"></div>
+          </div>
+          <div class="fin-group">
+            <h3>Contrast Checker</h3>
+            <label>Foreground<input type="color" id="fg-color" value="#ffffff" oninput="checkContrast()"/></label>
+            <label>Background<input type="color" id="bg-color" value="#7c3aed" oninput="checkContrast()"/></label>
+            <div class="contrast-preview" id="contrast-preview">Sample Text</div>
+            <div class="fin-result" id="contrast-result"></div>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- /.calc-main -->
+    </div>
+  </div>
+  <script src="calculator.js?v=2"></script>
+</body>
+</html>
